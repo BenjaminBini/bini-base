@@ -28,32 +28,32 @@ public abstract class BaseController<T extends BaseEntity<PK>, DTO extends BaseE
     }
 
     @GetMapping
-    protected Collection<DTO> list(@RequestParam Map<String, String> searchParams) {
+    protected APIResponse list(@RequestParam Map<String, String> searchParams) {
         GenericSpecificationBuilder<T> builder = new GenericSpecificationBuilder<>();
         searchParams.forEach((key, value) -> builder.with(key, ":", value));
-        return service.list(builder.build());
+        return new APISuccess<>(service.list(builder.build()));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DTO> get(@PathVariable("id") PK id) {
+    public APIResponse get(@PathVariable("id") PK id) {
         return this.service.get(id)
-                .map(t -> ResponseEntity.ok().body(t))
-                .orElse(ResponseEntity.notFound().build());
+                .<APIResponse>map(APISuccess::new)
+                .orElse(APIError.notFound());
     }
 
     @PostMapping
-    public ResponseEntity<DTO> save(@RequestBody DTO dto) {
-        return ResponseEntity.ok(this.service.save(dto));
+    public APIResponse save(@RequestBody DTO dto) {
+        return new APISuccess<>(this.service.save(dto));
     }
 
     @PutMapping
-    public ResponseEntity<DTO> update(@RequestBody DTO dto) {
+    public APIResponse update(@RequestBody DTO dto) {
         Optional<DTO> existingEntity = this.service.get(dto.getId());
         if (existingEntity.isEmpty()) {
-            return ResponseEntity.status(500).build();
+            return APIError.badRequest();
         }
         copyNonNullProperties(dto, existingEntity.get());
-        return ResponseEntity.ok(this.service.save(existingEntity.get()));
+        return new APISuccess<>(this.service.save(existingEntity.get()));
     }
 
 
