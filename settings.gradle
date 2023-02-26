@@ -1,1 +1,3 @@
-rootProject.name = 'bini-base'
+rootProject.name = 'bini-base-root'
+include 'bini-base'
+include 'bini-base-sample'

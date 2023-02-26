@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Reset DB" type="DatabaseScript">
+    <data-source id="959c6a78-06e8-476f-9d67-f71576365f63" namespace="schema/&quot;base&quot;" />
+    <script-text>DROP TABLE IF EXISTS base.userroles;
+DROP TABLE IF EXISTS base.role_;
+DROP TABLE IF EXISTS base.user_;</script-text>
+    <method v="2" />
+  </configuration>
+</component>

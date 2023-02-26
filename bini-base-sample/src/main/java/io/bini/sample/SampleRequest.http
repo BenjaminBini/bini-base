@@ -1,0 +1,26 @@
+### Hello
+GET localhost:4444/hello
+Authorization: Basic YWRtaW46cGFzc3dvcmQ=
+
+### Test
+GET localhost:4444/api/hello
+Authorization: Basic YWRtaW46cGFzc3dvcmQ=
+
+### Test
+GET localhost:4444/api/hello/admin
+Authorization: Basic YWRtaW46cGFzc3dvcmQ=
+
+### Users
+GET localhost:4444/api/user
+Authorization: Basic YWRtaW46cGFzc3dvcmQ=
+
+### Roles
+GET localhost:4444/api/role
+Authorization: Basic dXNlcjpwYXNzd29yZA==
+
+### Login
+POST localhost:4444/token
+# User
+# Authorization: Basic dXNlcjpwYXNzd29yZA==
+# Admin
+Authorization: Basic YWRtaW46cGFzc3dvcmQ=
