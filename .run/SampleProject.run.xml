@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="SampleProject" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-    <module name="bini-base-root.bini-base-sample.main" />
+    <module name="io.bini.bini-base-root.bini-base-sample.main" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="io.bini.sample.SampleProject" />
     <method v="2">
       <option name="Make" enabled="true" />
