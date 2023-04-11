@@ -8,13 +8,13 @@ import {
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
 
-import MainWrapper from "./layout/MainWrapper";
-import MobileNavBar from "./layout/MobileNavBar";
-import Menu from "./main-menu/menu";
+import Menu from "../main-menu/Menu";
+import MainWrapper from "./MainWrapper";
+import MobileNavBar from "./MobileNavBar";
 
 const navigation = [
   { name: "Dashboard", href: "#", icon: HomeIcon, current: true },
-  { name: "Team", href: "#", icon: UsersIcon, current: false },
+  { name: "Users", href: "#", icon: UsersIcon, current: false },
   { name: "Projects", href: "#", icon: FolderIcon, current: false },
   { name: "Calendar", href: "#", icon: CalendarIcon, current: false },
   { name: "Documents", href: "#", icon: DocumentDuplicateIcon, current: false },
@@ -32,19 +32,11 @@ const subNavigations = [
   },
 ];
 
-export default function App() {
+const Layout = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <>
-      {/*
-        This example requires updating your template:
-
-        ```
-        <html class="h-full bg-white">
-        <body class="h-full">
-        ```
-      */}
       <div>
         <Menu
           navigation={navigation}
@@ -53,8 +45,10 @@ export default function App() {
           setSidebarOpen={setSidebarOpen}
         ></Menu>
         <MobileNavBar setSidebarOpen={setSidebarOpen}></MobileNavBar>
-        <MainWrapper>Toto</MainWrapper>
+        <MainWrapper>{children}</MainWrapper>
       </div>
     </>
   );
-}
+};
+
+export default Layout;
