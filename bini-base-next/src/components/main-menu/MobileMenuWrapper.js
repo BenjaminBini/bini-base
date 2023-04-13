@@ -57,7 +57,7 @@ const MobileMenuWrapper = ({ sidebarOpen, setSidebarOpen, children }) => {
                 </div>
               </Transition.Child>
               {/* Sidebar component, swap this element with another sidebar if you like */}
-              <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-2 ring-1 ring-white/10">
+              <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-slate-950 px-6 pb-2 ring-1 ring-white/10">
                 <div className="flex h-16 shrink-0 items-center">
                   <img
                     className="h-8 w-auto"

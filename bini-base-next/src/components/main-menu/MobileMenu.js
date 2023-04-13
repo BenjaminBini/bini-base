@@ -16,13 +16,13 @@ const MobileMenu = ({
         <MobileMenuMainNavItem item={item} key={i}></MobileMenuMainNavItem>
       ))}
     </MobileMenuMainNav>
-    {subNavigations.map((navigation, i) => {
+    {subNavigations.map((navigation, i) => (
       <MobileMenuSubNav name={navigation.name}>
         {navigation.items.map((item, i) => (
           <MobileMenuSubNavItem item={item} key={i}></MobileMenuSubNavItem>
         ))}
-      </MobileMenuSubNav>;
-    })}
+      </MobileMenuSubNav>
+    ))}
   </MobileMenuWrapper>
 );
 
