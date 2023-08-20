@@ -11,7 +11,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/hello")
-@PreAuthorize("hasAuthority('ADMIN')")
 public class HelloWorldController {
 
     @GetMapping
@@ -21,6 +20,7 @@ public class HelloWorldController {
     }
 
     @GetMapping("/admin")
+    @PreAuthorize("hasAuthority('ADMIN')")
     protected APIResponse helloAdmin(Map<String, String> searchParams) {
         return new APISuccess<>("success admin");
     }

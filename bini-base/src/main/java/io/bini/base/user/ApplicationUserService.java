@@ -18,4 +18,16 @@ public class ApplicationUserService extends BaseService<ApplicationUser, Applica
     public Optional<ApplicationUser> findByUsername(String username) {
         return this.applicationUserRepository.findApplicationUserByUsernameIgnoreCase(username);
     }
+
+    public Optional<ApplicationUser> save(ApplicationUserWithPasswordDTO dto) {
+        ApplicationUser applicationUser = mapperService.getMapper(ApplicationUser.class, ApplicationUserWithPasswordDTO.class).toModel(dto);
+
+        // If we are in an "update" case, we don't want to change the password if it is not provided
+        if (dto.getId() != null && (dto.getPassword() == null || dto.getPassword().isEmpty())) {
+            Optional<ApplicationUser> existingUser = this.applicationUserRepository.findById(dto.getId());
+            existingUser.ifPresent(user -> applicationUser.setPassword(user.getPassword()));
+        }
+        return Optional.of(this.applicationUserRepository.save(applicationUser));
+    }
+
 }

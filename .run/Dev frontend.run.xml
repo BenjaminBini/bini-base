@@ -1,11 +1,12 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Dev frontend" type="js.build_tools.npm">
-    <package-json value="$PROJECT_DIR$/bini-base-next/package.json" />
+    <package-json value="$PROJECT_DIR$/bini-base-vite/package.json" />
     <command value="run" />
     <scripts>
       <script value="dev" />
     </scripts>
     <node-interpreter value="project" />
+    <package-manager value="yarn" />
     <envs />
     <method v="2" />
   </configuration>

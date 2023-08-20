@@ -32,7 +32,7 @@ public class ApplicationStartup {
         if (maybeAdminRole.isEmpty()) {
             log.info("No admin role in DB, creating it");
             RoleDTO adminRole = new RoleDTO();
-            adminRole.setName("ADMIN");
+            adminRole.setCode("ADMIN");
             adminRole = roleService.save(adminRole);
             maybeAdminRole = Optional.of(adminRole);
         }
@@ -41,7 +41,7 @@ public class ApplicationStartup {
         if (maybeUserRole.isEmpty()) {
             log.info("No user role in DB, creating it");
             RoleDTO userRole = new RoleDTO();
-            userRole.setName("USER");
+            userRole.setCode("USER");
             userRole = roleService.save(userRole);
             maybeUserRole = Optional.of(userRole);
         }

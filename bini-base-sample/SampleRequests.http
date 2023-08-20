@@ -1,2 +1,52 @@
-GET localhost:4444/api/user
+GET localhost:4444/api/user/2
+Authorization: Basic YWRtaW46cGFzc3dvcmQ=
+
+###
+PUT localhost:4444/api/user
+Authorization: Basic YWRtaW46cGFzc3dvcmQ=
+Content-Type: application/json
+
+{
+  "id": 2,
+  "roles": [
+    {
+      "id": 3
+    },
+    {
+      "id": 1
+    }
+  ]
+}
+
+###
+
+POST localhost:4444/api/user
+Authorization: Basic YWRtaW46cGFzc3dvcmQ=
+Content-Type: application/json
+
+{
+  "username": "titi",
+  "password": "{noop}password",
+  "email": "test@yopmail.xom"
+}
+
+###
+
+POST localhost:4444/api/role
+Authorization: Basic YWRtaW46cGFzc3dvcmQ=
+Content-Type: application/json
+
+{
+  "code": "GUEST",
+  "label": "Anonyme"
+}
+
+###
+
+GET localhost:4444/api/role
+Authorization: Basic YWRtaW46cGFzc3dvcmQ=
+
+###
+
+DELETE localhost:4444/api/role/6
 Authorization: Basic YWRtaW46cGFzc3dvcmQ=

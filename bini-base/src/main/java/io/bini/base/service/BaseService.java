@@ -28,11 +28,11 @@ public class BaseService<T extends BaseEntity<PK>, DTO extends BaseEntity<PK>, P
 
         @SuppressWarnings("unchecked")
         Class<T> entityClass = ((Class<T>) ((ParameterizedType) getClass()
-            .getGenericSuperclass()).getActualTypeArguments()[0]);
+                .getGenericSuperclass()).getActualTypeArguments()[0]);
 
         @SuppressWarnings("unchecked")
         Class<DTO> dtoClass = ((Class<DTO>) ((ParameterizedType) getClass()
-            .getGenericSuperclass()).getActualTypeArguments()[1]);
+                .getGenericSuperclass()).getActualTypeArguments()[1]);
 
         this.mapper = mapperService.getMapper(entityClass, dtoClass);
     }
@@ -47,14 +47,14 @@ public class BaseService<T extends BaseEntity<PK>, DTO extends BaseEntity<PK>, P
 
     public Collection<DTO> list() {
         return this.repository.findAll()
-            .stream().map(this.mapper::toDto)
-            .collect(Collectors.toList());
+                .stream().map(this.mapper::toDto)
+                .collect(Collectors.toList());
     }
 
     public Collection<DTO> list(Specification<T> spec) {
         return this.repository.findAll(spec)
-            .stream().map(this.mapper::toDto)
-            .collect(Collectors.toList());
+                .stream().map(this.mapper::toDto)
+                .collect(Collectors.toList());
     }
 
     public long count() {

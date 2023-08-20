@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import java.util.Collection;
 
 public class BaseSortedController<T extends BaseSortedEntity<PK, T>, DTO extends SortedDTO<PK>, PK> extends BaseController<T,
-    DTO, PK> {
+        DTO, PK> {
     private final BaseSortedService<T, DTO, PK> baseSortedService;
 
-    public BaseSortedController(String[] roles, BaseSortedService<T, DTO, PK> service) {
-        super(roles, service);
+    public BaseSortedController(BaseSortedService<T, DTO, PK> service) {
+        super(service);
         this.baseSortedService = service;
     }
 

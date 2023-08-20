@@ -13,46 +13,37 @@ import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
 import java.util.*;
 
 @Data
-@PreAuthorize("hasAnyAuthority(this.roles)")
 public abstract class BaseController<T extends BaseEntity<PK>, DTO extends BaseEntity<PK>, PK> {
-
-    protected final String[] roles;
 
     protected final BaseService<T, DTO, PK> service;
 
-    public BaseController(String[] roles, BaseService<T, DTO, PK> service) {
-        this.roles = roles;
+    public BaseController(BaseService<T, DTO, PK> service) {
         this.service = service;
     }
 
-    @GetMapping
-    protected APIResponse list(@RequestParam Map<String, String> searchParams) {
+    protected APIResponse list(Map<String, String> searchParams) {
         GenericSpecificationBuilder<T> builder = new GenericSpecificationBuilder<>();
         searchParams.forEach((key, value) -> builder.with(key, ":", value));
         return new APISuccess<>(service.list(builder.build()));
     }
 
-    @GetMapping("/{id}")
-    public APIResponse get(@PathVariable("id") PK id) {
+    protected APIResponse get(PK id) {
         return this.service.get(id)
                 .<APIResponse>map(APISuccess::new)
                 .orElse(APIError.notFound());
     }
 
-    @PostMapping
-    public APIResponse save(@RequestBody DTO dto) {
+    protected APIResponse save(DTO dto) {
         return new APISuccess<>(this.service.save(dto));
     }
 
-    @PutMapping
-    public APIResponse update(@RequestBody DTO dto) {
+    protected APIResponse update(DTO dto) {
         Optional<DTO> existingEntity = this.service.get(dto.getId());
         if (existingEntity.isEmpty()) {
             return APIError.badRequest();
@@ -61,26 +52,19 @@ public abstract class BaseController<T extends BaseEntity<PK>, DTO extends BaseE
         return new APISuccess<>(this.service.save(existingEntity.get()));
     }
 
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<DTO> delete(@PathVariable("id") PK id) throws ExistingRelationshipException {
+    protected ResponseEntity<DTO> delete(PK id) throws ExistingRelationshipException {
         try {
             this.service.delete(id);
             return ResponseEntity.ok().build();
-        } catch (ExistingRelationshipException e) {
-            throw e;
         } catch (Exception e) {
             return ResponseEntity.status(500).build();
         }
     }
 
-    @PostMapping("/delete")
-    public ResponseEntity<DTO> delete(@RequestBody Iterable<PK> ids) throws ExistingRelationshipException {
+    protected ResponseEntity<DTO> delete(Iterable<PK> ids) throws ExistingRelationshipException {
         try {
             this.service.delete(ids);
             return ResponseEntity.ok().build();
-        } catch (ExistingRelationshipException e) {
-            throw e;
         } catch (Exception e) {
             return ResponseEntity.status(500).build();
         }
@@ -116,7 +100,6 @@ public abstract class BaseController<T extends BaseEntity<PK>, DTO extends BaseE
         String[] result = new String[emptyNames.size()];
         return emptyNames.toArray(result);
     }
-
 
     @ExceptionHandler({ExistingRelationshipException.class})
     public ResponseEntity<Object> handleRelationshipException(

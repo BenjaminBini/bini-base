@@ -15,5 +15,8 @@ public class Role implements BaseEntity<Long> {
     private Long id;
 
     @NotEmpty
-    private String name;
+    private String code;
+
+    @NotEmpty
+    private String label;
 }

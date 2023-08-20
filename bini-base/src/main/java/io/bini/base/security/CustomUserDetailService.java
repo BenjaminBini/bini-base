@@ -29,8 +29,8 @@ public class CustomUserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<ApplicationUser> maybeApplicationUser = applicationUserService.findByUsername(username);
         return maybeApplicationUser
-            .map(CustomUserDetails::new)
-            .orElseThrow(() -> new UsernameNotFoundException("username " + username + " is not found"));
+                .map(CustomUserDetails::new)
+                .orElseThrow(() -> new UsernameNotFoundException("username " + username + " is not found"));
     }
 
     @Getter
@@ -47,11 +47,11 @@ public class CustomUserDetailService implements UserDetailsService {
             this.setAccountNonLocked(true);
             this.setCredentialsNonExpired(true);
             this.setAuthorities(
-                AuthorityUtils.commaSeparatedStringToAuthorityList(
-                    applicationUser.getRoles().stream()
-                        .map(Role::getName)
-                        .collect(Collectors.joining(","))
-                )
+                    AuthorityUtils.commaSeparatedStringToAuthorityList(
+                            applicationUser.getRoles().stream()
+                                    .map(Role::getCode)
+                                    .collect(Collectors.joining(","))
+                    )
             );
         }
 

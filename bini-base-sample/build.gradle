@@ -15,6 +15,7 @@ repositories {
 dependencies {
     implementation project(':bini-base')
     implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '3.1.2'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
     compileOnly 'org.projectlombok:lombok'
 

@@ -28,7 +28,7 @@ dependencies {
     api 'org.mapstruct:mapstruct:1.5.3.Final'
 
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
-    compileOnly 'com.auth0:java-jwt:4.2.1'
+    implementation 'com.auth0:java-jwt:4.2.1'
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'

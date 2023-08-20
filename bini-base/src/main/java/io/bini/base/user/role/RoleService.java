@@ -17,12 +17,12 @@ public class RoleService extends BaseService<Role, RoleDTO, Long> {
     }
 
     public Optional<RoleDTO> getAdminRole() {
-        Optional<Role> maybeAdmin = this.roleRepository.findRoleByName("ADMIN");
+        Optional<Role> maybeAdmin = this.roleRepository.findRoleByCode("ADMIN");
         return maybeAdmin.map(this.mapper::toDto);
     }
 
     public Optional<RoleDTO> getUserRole() {
-        Optional<Role> maybeUser = this.roleRepository.findRoleByName("USER");
+        Optional<Role> maybeUser = this.roleRepository.findRoleByCode("USER");
         return maybeUser.map(this.mapper::toDto);
     }
 
