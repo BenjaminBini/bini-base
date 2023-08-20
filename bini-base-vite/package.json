@@ -1,0 +1,53 @@
+{
+  "name": "bini-base-vite",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@mantine/carousel": "^6.0.17",
+    "@mantine/core": "^6.0.17",
+    "@mantine/dates": "^6.0.17",
+    "@mantine/dropzone": "^6.0.17",
+    "@mantine/form": "^6.0.17",
+    "@mantine/hooks": "^6.0.17",
+    "@mantine/modals": "^6.0.17",
+    "@mantine/notifications": "^6.0.17",
+    "@mantine/nprogress": "^6.0.17",
+    "@mantine/prism": "^6.0.17",
+    "@mantine/spotlight": "^6.0.17",
+    "@mantine/tiptap": "^6.0.17",
+    "@tabler/icons-react": "^2.28.0",
+    "@tiptap/extension-link": "^2.0.4",
+    "@tiptap/react": "^2.0.4",
+    "@tiptap/starter-kit": "^2.0.4",
+    "axios": "^1.4.0",
+    "dayjs": "^1.11.9",
+    "embla-carousel-react": "^8.0.0-rc11",
+    "localforage": "^1.10.0",
+    "mantine-datatable": "^2.9.0",
+    "match-sorter": "^6.3.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-query": "^3.39.3",
+    "react-router-dom": "^6.14.2",
+    "sort-by": "^1.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@vitejs/plugin-react": "^4.0.3",
+    "eslint": "^8.45.0",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.3",
+    "prettier": "3.0.0",
+    "vite": "^4.4.5"
+  }
+}
