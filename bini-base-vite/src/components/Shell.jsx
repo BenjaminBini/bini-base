@@ -1,21 +1,29 @@
 import { useState } from "react";
 import {
+  ActionIcon,
   AppShell,
-  Navbar,
-  Header,
-  Footer,
-  Text,
-  MediaQuery,
   Burger,
+  Footer,
+  Group,
+  Header,
+  MediaQuery,
+  Navbar,
+  Text,
+  useMantineColorScheme,
   useMantineTheme,
-  Container,
 } from "@mantine/core";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import Menu from "./Menu.jsx";
+import { useCurrentUser } from "../api/user-api.js";
+import { IconMoonStars, IconSun } from "@tabler/icons-react";
 
 export default function Shell({ children }) {
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
+  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+
+  const { data: currentUser } = useCurrentUser();
+
   return (
     <AppShell
       styles={{
@@ -56,8 +64,28 @@ export default function Shell({ children }) {
                 mr="xl"
               />
             </MediaQuery>
-
-            <Text>Application header</Text>
+            <Group position="apart" w="100%">
+              <Text>Application header</Text>
+              <Group>
+                {currentUser ? (
+                  <Link to="/logout">Logout</Link>
+                ) : (
+                  <Link to="login">Login</Link>
+                )}
+                <ActionIcon
+                  variant="outline"
+                  color={colorScheme === "dark" ? "yellow" : "blue"}
+                  onClick={() => toggleColorScheme()}
+                  title="Toggle color scheme"
+                >
+                  {colorScheme === "dark" ? (
+                    <IconSun size="1.1rem" />
+                  ) : (
+                    <IconMoonStars size="1.1rem" />
+                  )}
+                </ActionIcon>
+              </Group>
+            </Group>
           </div>
         </Header>
       }

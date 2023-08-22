@@ -3,14 +3,14 @@ import { useMutation, useQuery } from "react-query";
 
 export function useRoles() {
   return useQuery("roles", async () => {
-    const { data } = await axiosInstance.get("/role");
+    const { data } = await axiosInstance.get("/api/role");
     return data.data;
   });
 }
 
 export function useRole(roleId) {
   return useQuery(["roles", roleId], async () => {
-    const { data } = await axiosInstance.get(`/role/${roleId}`);
+    const { data } = await axiosInstance.get(`/api/role/${roleId}`);
     return data.data;
   });
 }
@@ -18,7 +18,7 @@ export function useRole(roleId) {
 export function useSaveRole(queryClient) {
   return useMutation(
     async (role) => {
-      const { data } = await axiosInstance.post("/role", role);
+      const { data } = await axiosInstance.post("/api/role", role);
       return data.data;
     },
     {
@@ -30,7 +30,7 @@ export function useSaveRole(queryClient) {
 }
 
 export function useDeleteRole(queryClient) {
-  return useMutation((roleId) => axiosInstance.delete(`/role/${roleId}`), {
+  return useMutation((roleId) => axiosInstance.delete(`/api/role/${roleId}`), {
     onSuccess: () => {
       queryClient.invalidateQueries("roles");
     },
@@ -38,9 +38,12 @@ export function useDeleteRole(queryClient) {
 }
 
 export function useDeleteRoles(queryClient) {
-  return useMutation((roleIds) => axiosInstance.post(`/role/delete`, roleIds), {
-    onSuccess: () => {
-      queryClient.invalidateQueries("roles");
+  return useMutation(
+    (roleIds) => axiosInstance.post(`/api/role/delete`, roleIds),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("roles");
+      },
     },
-  });
+  );
 }

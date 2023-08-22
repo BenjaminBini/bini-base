@@ -10,9 +10,7 @@ import { hasLength, useForm } from "@mantine/form";
 import { useQueryClient } from "react-query";
 import { useSaveRole } from "../api/role-api.js";
 
-export default function AddRoleModal({ opened, close }) {
-  const CODE_MAX_LENGTH = 10;
-
+export default function RoleAddModal({ opened, close }) {
   const queryClient = useQueryClient();
   const createRole = useSaveRole(queryClient);
 
@@ -34,7 +32,7 @@ export default function AddRoleModal({ opened, close }) {
       label: "",
     },
     validate: {
-      code: hasLength({ min: 3, max: CODE_MAX_LENGTH }),
+      code: hasLength({ min: 3, max: 10 }),
       label: hasLength({ min: 3, max: 50 }),
     },
   });
@@ -52,7 +50,7 @@ export default function AddRoleModal({ opened, close }) {
               onInput={(event) => {
                 event.target.value = event.target.value.toUpperCase();
               }}
-              maxLength={CODE_MAX_LENGTH}
+              maxLength="10"
               {...form.getInputProps("code")}
             />
             <TextInput

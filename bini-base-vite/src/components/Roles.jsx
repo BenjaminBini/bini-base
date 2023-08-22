@@ -2,7 +2,7 @@ import { DataTable } from "mantine-datatable";
 import { ActionIcon, Button, Group, Stack, Text, Title } from "@mantine/core";
 import { useDeleteRole, useDeleteRoles, useRoles } from "../api/role-api.js";
 import { useDisclosure } from "@mantine/hooks";
-import AddRoleModal from "./AddRoleModal.jsx";
+import RoleAddModal from "./RoleAddModal.jsx";
 import { useQueryClient } from "react-query";
 import { IconTrash } from "@tabler/icons-react";
 import { modals } from "@mantine/modals";
@@ -110,7 +110,7 @@ export default function Roles() {
             Delete selection
           </Button>
         </Group>
-        <AddRoleModal opened={addRoleModalOpened} close={closeAddRoleModal} />
+        <RoleAddModal opened={addRoleModalOpened} close={closeAddRoleModal} />
       </Stack>
     </div>
   );

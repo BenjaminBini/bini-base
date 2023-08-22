@@ -1,12 +1,21 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:4444/api",
+  baseURL: "http://localhost:4444",
   timeout: 1000,
-  headers: {
-    Authorization:
-      "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY5MzQwMzk1Mn0.rfCPe4l2nr2b8A6jDglUEvjLUjagK0ZNkRTB9hNvY4wQCYNs5jxFzIa7myCjLPF6oJuq_YidwqRTq91RBuqDWw",
-  },
 });
+
+axiosInstance.interceptors.request.use((config) => {
+  // set bearer token in header if present in local storage
+  const token = localStorage.getItem("token");
+  if (token) {
+    config.headers.Authorization = token;
+  } else {
+    //delete config.headers.Authorization;
+  }
+  return config;
+});
+
+// TODO : manage gracefully API errors
 
 export default axiosInstance;

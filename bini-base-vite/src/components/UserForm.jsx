@@ -8,6 +8,7 @@ import {
 } from "@mantine/core";
 import { hasLength, isEmail, useForm } from "@mantine/form";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function UserForm({ user, allRoles, onSubmit }) {
   const [userRoles, setUserRoles] = useState(
@@ -71,7 +72,21 @@ export default function UserForm({ user, allRoles, onSubmit }) {
           nothingFound="No results"
         />
         <Group position="left" mt="md">
-          <Button type="submit">Save</Button>
+          <Button
+            variant="gradient"
+            gradient={{ from: "indigo", to: "cyan" }}
+            type="submit"
+          >
+            Save
+          </Button>
+          <Button
+            variant="outline"
+            type="submit"
+            component={Link}
+            to="/admin/users"
+          >
+            Cancel
+          </Button>
         </Group>
       </Stack>
     </form>
