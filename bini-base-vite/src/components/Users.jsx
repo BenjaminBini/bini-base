@@ -114,7 +114,7 @@ export default function Users() {
           },
         ]}
       />
-      <Group position="left" mt="md">
+      <Group position="left">
         <Button
           variant="gradient"
           gradient={{ from: "indigo", to: "cyan" }}
