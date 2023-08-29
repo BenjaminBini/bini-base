@@ -16,13 +16,13 @@ public class HelloWorldController {
     @GetMapping
     @PreAuthorize("permitAll()")
     protected APIResponse helloAnonymous(Map<String, String> searchParams) {
-        return new APISuccess<>("success anonymous");
+        return new APISuccess("success anonymous");
     }
 
     @GetMapping("/admin")
     @PreAuthorize("hasAuthority('ADMIN')")
     protected APIResponse helloAdmin(Map<String, String> searchParams) {
-        return new APISuccess<>("success admin");
+        return new APISuccess("success admin");
     }
 
 }

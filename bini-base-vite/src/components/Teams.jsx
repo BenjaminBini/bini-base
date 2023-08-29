@@ -7,45 +7,47 @@ import {
   Text,
   Title,
 } from "@mantine/core";
-import { useDeleteUser, useDeleteUsers, useUsers } from "../api/user-api.js";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { IconTrash } from "@tabler/icons-react";
 import { modals } from "@mantine/modals";
 import { useQueryClient } from "react-query";
+import { useDeleteTeam, useTeams } from "../api/teams-api.js";
 import PagedTable from "./PagedTable.jsx";
 
-export default function Users() {
+export default function Teams() {
   const navigate = useNavigate();
   const [selectedRecords, setSelectedRecords] = useState([]);
-  const queryClient = useQueryClient();
-  const deleteUser = useDeleteUser(queryClient);
-  const deleteUsers = useDeleteUsers(queryClient);
 
-  const openDeleteUserModal = (user) =>
+  const queryClient = useQueryClient();
+
+  const deleteTeam = useDeleteTeam(queryClient);
+  const deleteTeams = useDeleteTeam(queryClient);
+
+  const openDeleteTeamModal = (team) =>
     modals.openConfirmModal({
       title: "Please confirm your action",
       children: (
         <Text size="sm">
-          Please confirm that you want to delete the user {user.username}
+          Please confirm that you want to delete the team {team.label}
         </Text>
       ),
       labels: { confirm: "Confirm", cancel: "Cancel" },
-      onConfirm: () => deleteUser.mutate(user.id),
+      onConfirm: () => deleteTeam.mutate(team.id),
     });
 
-  const openDeleteUsersModal = () => {
+  const openDeleteTeamsModal = () => {
     modals.openConfirmModal({
       title: "Please confirm your action",
       children: (
         <Text size="sm">
-          Please confirm that you want to delete the following users:{" "}
-          {selectedRecords.map((user) => user.username).join(", ")}
+          Please confirm that you want to delete the following teams:{" "}
+          {selectedRecords.map((team) => team.label).join(", ")}
         </Text>
       ),
       labels: { confirm: "Confirm", cancel: "Cancel" },
       onConfirm: () => {
-        deleteUsers.mutate(selectedRecords.map((user) => user.id));
+        deleteTeams.mutate(selectedRecords.map((team) => team.id));
         setSelectedRecords([]);
       },
     });
@@ -53,19 +55,12 @@ export default function Users() {
 
   const columns = [
     {
-      accessor: "id",
-      title: "#",
-      textAlignment: "right",
-      width: 60,
-    },
-    {
-      accessor: "username",
-      title: "Username",
-      render: ({ id, username }) => {
-        return <Link to={`/admin/users/${id}`}>{username}</Link>;
+      accessor: "label",
+      title: "Label",
+      render: ({ id, label }) => {
+        return <Link to={`/admin/teams/${id}`}>{label}</Link>;
       },
     },
-    { accessor: "email", title: "Email" },
     {
       accessor: "createdDate",
       title: "Created",
@@ -86,38 +81,38 @@ export default function Users() {
       textAlignment: "right",
       render: (user) => (
         <Group spacing="4" position="right" noWrap>
-          <ActionIcon onClick={() => openDeleteUserModal(user)}>
+          <ActionIcon onClick={() => openDeleteTeamModal(user)}>
             <IconTrash size={18} />
           </ActionIcon>
         </Group>
       ),
     },
   ];
+
   return (
     <Stack>
       <Box>
-        <Title>Users management</Title>
+        <Title>Teams management</Title>
       </Box>
 
       <PagedTable
         columns={columns}
-        getQuery={useUsers}
+        getQuery={useTeams}
         selectedRecords={selectedRecords}
         setSelectedRecords={setSelectedRecords}
       />
-
       <Group position="left">
         <Button
           variant="gradient"
           gradient={{ from: "indigo", to: "cyan" }}
-          onClick={() => navigate("/admin/users/new")}
+          onClick={() => navigate("/admin/teams/new")}
         >
-          New
+          Create a Team
         </Button>
         <Button
           variant="gradient"
           gradient={{ from: "orange", to: "red" }}
-          onClick={openDeleteUsersModal}
+          onClick={openDeleteTeamsModal}
           disabled={selectedRecords.length === 0}
         >
           Delete selection

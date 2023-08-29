@@ -33,18 +33,17 @@ public class ApplicationUserController extends BaseController<ApplicationUser, A
         Optional<ApplicationUserDTO> maybeLoggedInUserDTO = maybeLoggedInUser.map(applicationUserService.getMapper()::toDto);
 
         if (maybeLoggedInUserDTO.isPresent()) {
-            return new APISuccess<>(maybeLoggedInUserDTO.get());
+            return new APISuccess(maybeLoggedInUserDTO.get());
         } else {
             return APIError.notFound();
         }
     }
 
-
     @Override
     @GetMapping
     @PreAuthorize("hasAuthority('ADMIN')")
-    protected APIResponse list(@RequestParam Map<String, String> searchParams) {
-        return super.list(searchParams);
+    protected APIResponse list(@RequestParam Map<String, String> searchParams, @RequestParam(required = false, defaultValue = "0") int page, @RequestParam(required = false, defaultValue = "2000") int delta) {
+        return super.list(searchParams, page, delta);
     }
 
     @Override
@@ -78,6 +77,6 @@ public class ApplicationUserController extends BaseController<ApplicationUser, A
     @PostMapping
     @PreAuthorize("hasAuthority('ADMIN')")
     protected APIResponse save(@RequestBody ApplicationUserWithPasswordDTO dto) {
-        return new APISuccess<>(applicationUserService.save(dto));
+        return new APISuccess(applicationUserService.save(dto));
     }
 }

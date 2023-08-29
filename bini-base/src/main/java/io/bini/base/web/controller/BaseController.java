@@ -10,6 +10,10 @@ import lombok.Data;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.util.Pair;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,10 +31,28 @@ public abstract class BaseController<T extends BaseEntity<PK>, DTO extends BaseE
         this.service = service;
     }
 
+    protected APIResponse list(Map<String, String> searchParams, int page, int delta) {
+        Pageable pageable = PageRequest.of(page, delta);
+        GenericSpecificationBuilder<T> builder = getBuilderFromQueryParams(searchParams);
+        Pair<Collection<DTO>, Page<T>> serviceResponse = service.list(builder.build(), pageable);
+        return new APISuccess(serviceResponse.getFirst(), serviceResponse.getSecond());
+    }
+
     protected APIResponse list(Map<String, String> searchParams) {
+        Pageable pageable = PageRequest.of(0, 2_000);
+        GenericSpecificationBuilder<T> builder = getBuilderFromQueryParams(searchParams);
+        Pair<Collection<DTO>, Page<T>> serviceResponse = service.list(builder.build(), pageable);
+        return new APISuccess(serviceResponse.getFirst(), serviceResponse.getSecond());
+    }
+
+    private GenericSpecificationBuilder<T> getBuilderFromQueryParams(Map<String, String> searchParams) {
         GenericSpecificationBuilder<T> builder = new GenericSpecificationBuilder<>();
-        searchParams.forEach((key, value) -> builder.with(key, ":", value));
-        return new APISuccess<>(service.list(builder.build()));
+        searchParams.forEach((key, value) -> {
+            if (!key.equals("page") && !key.equals("delta")) {
+                builder.with(key, ":", value);
+            }
+        });
+        return builder;
     }
 
     protected APIResponse get(PK id) {
@@ -40,7 +62,7 @@ public abstract class BaseController<T extends BaseEntity<PK>, DTO extends BaseE
     }
 
     protected APIResponse save(DTO dto) {
-        return new APISuccess<>(this.service.save(dto));
+        return new APISuccess(this.service.save(dto));
     }
 
     protected APIResponse update(DTO dto) {
@@ -49,7 +71,7 @@ public abstract class BaseController<T extends BaseEntity<PK>, DTO extends BaseE
             return APIError.badRequest();
         }
         copyNonNullProperties(dto, existingEntity.get());
-        return new APISuccess<>(this.service.save(existingEntity.get()));
+        return new APISuccess(this.service.save(existingEntity.get()));
     }
 
     protected ResponseEntity<DTO> delete(PK id) throws ExistingRelationshipException {

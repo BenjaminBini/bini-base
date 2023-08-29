@@ -1,10 +1,12 @@
 import axiosInstance from "./axios-config.js";
 import { useMutation, useQuery } from "react-query";
 
-export function useRoles() {
-  return useQuery("roles", async () => {
-    const { data } = await axiosInstance.get("/api/role");
-    return data.data;
+export function useRoles(page, delta) {
+  return useQuery(["roles", page, delta], async () => {
+    const { data } = await axiosInstance.get(
+      `/api/role?page=${page}&delta=${delta}`,
+    );
+    return data;
   });
 }
 

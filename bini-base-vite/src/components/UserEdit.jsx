@@ -9,7 +9,7 @@ import { useParams } from "react-router-dom";
 export default function UserEdit() {
   const { userId } = useParams();
   const { data: user } = useUser(userId);
-  const { data: roles } = useRoles();
+  const { data: roles } = useRoles(0, 1000);
   const queryClient = useQueryClient();
   const saveUser = useSaveUser(queryClient);
 

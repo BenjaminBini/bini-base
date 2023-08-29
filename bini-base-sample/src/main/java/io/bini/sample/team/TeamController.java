@@ -1,4 +1,4 @@
-package io.bini.base.user.role;
+package io.bini.sample.team;
 
 import io.bini.base.exception.ExistingRelationshipException;
 import io.bini.base.web.controller.APIResponse;
@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/role")
-public class RoleController extends BaseController<Role, RoleDTO, Long> {
+@RequestMapping("/api/team")
+public class TeamController extends BaseController<Team, TeamDTO, Long> {
 
     @Autowired
-    public RoleController(RoleService service) {
+    public TeamController(TeamService service) {
         super(service);
     }
 
@@ -36,27 +36,27 @@ public class RoleController extends BaseController<Role, RoleDTO, Long> {
     @Override
     @PostMapping
     @PreAuthorize("hasAuthority('ADMIN')")
-    protected APIResponse save(@RequestBody RoleDTO dto) {
+    protected APIResponse save(@RequestBody TeamDTO dto) {
         return super.save(dto);
     }
 
     @Override
     @PutMapping
     @PreAuthorize("hasAuthority('ADMIN')")
-    protected APIResponse update(@RequestBody RoleDTO dto) {
+    protected APIResponse update(@RequestBody TeamDTO dto) {
         return super.update(dto);
     }
 
     @Override
     @DeleteMapping("/{id}")
-    protected ResponseEntity<RoleDTO> delete(@PathVariable("id") Long id) throws ExistingRelationshipException {
+    protected ResponseEntity<TeamDTO> delete(@PathVariable("id") Long id) throws ExistingRelationshipException {
         return super.delete(id);
     }
 
     @Override
     @PostMapping("/delete")
     @PreAuthorize("hasAuthority('ADMIN')")
-    protected ResponseEntity<RoleDTO> delete(@RequestBody Iterable<Long> ids) throws ExistingRelationshipException {
+    protected ResponseEntity<TeamDTO> delete(@RequestBody Iterable<Long> ids) throws ExistingRelationshipException {
         return super.delete(ids);
     }
 }

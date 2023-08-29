@@ -1,4 +1,3 @@
-import { DataTable } from "mantine-datatable";
 import { ActionIcon, Button, Group, Stack, Text, Title } from "@mantine/core";
 import { useDeleteRole, useDeleteRoles, useRoles } from "../api/role-api.js";
 import { useDisclosure } from "@mantine/hooks";
@@ -8,9 +7,9 @@ import { IconTrash } from "@tabler/icons-react";
 import { modals } from "@mantine/modals";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import PagedTable from "./PagedTable.jsx";
 
 export default function Roles() {
-  const { data: roles, status } = useRoles();
   const [selectedRecords, setSelectedRecords] = useState([]);
   const [
     addRoleModalOpened,
@@ -49,49 +48,41 @@ export default function Roles() {
     });
   };
 
+  const columns = [
+    {
+      accessor: "code",
+      title: "Code",
+      render: ({ id, code }) => <Link to={`/admin/roles/${id}`}>{code}</Link>,
+      width: 150,
+    },
+    {
+      accessor: "label",
+      title: "Label",
+    },
+    {
+      accessor: "actions",
+      title: "",
+      textAlignment: "right",
+      render: (role) => (
+        <Group spacing="4" position="right" noWrap>
+          <ActionIcon onClick={() => openDeleteRoleModal(role)}>
+            <IconTrash size={18} />
+          </ActionIcon>
+        </Group>
+      ),
+    },
+  ];
+
   return (
     <div>
       <Stack>
         <Title>Roles management</Title>
 
-        <DataTable
-          fetching={status === "loading"}
-          loaderBackgroundBlur={3}
-          withBorder
-          borderRadius="sm"
-          striped
-          noRecordsText="No users found"
-          minHeight={roles && roles.length === 0 ? 150 : 0}
-          highlightOnHover
-          records={roles}
+        <PagedTable
+          columns={columns}
+          getQuery={useRoles}
           selectedRecords={selectedRecords}
-          onSelectedRecordsChange={setSelectedRecords}
-          columns={[
-            {
-              accessor: "code",
-              title: "Code",
-              render: ({ id, code }) => (
-                <Link to={`/admin/roles/${id}`}>{code}</Link>
-              ),
-              width: 150,
-            },
-            {
-              accessor: "label",
-              title: "Label",
-            },
-            {
-              accessor: "actions",
-              title: "",
-              textAlignment: "right",
-              render: (role) => (
-                <Group spacing="4" position="right" noWrap>
-                  <ActionIcon onClick={() => openDeleteRoleModal(role)}>
-                    <IconTrash size={18} />
-                  </ActionIcon>
-                </Group>
-              ),
-            },
-          ]}
+          setSelectedRecords={setSelectedRecords}
         />
         <Group>
           <Button
@@ -99,7 +90,7 @@ export default function Roles() {
             gradient={{ from: "indigo", to: "cyan" }}
             onClick={openAddRoleModal}
           >
-            Add role
+            Create a Role
           </Button>
           <Button
             variant="gradient"

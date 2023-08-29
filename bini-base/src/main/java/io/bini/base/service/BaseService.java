@@ -7,7 +7,10 @@ import io.bini.base.persistence.BaseEntity;
 import io.bini.base.persistence.BaseRepository;
 import lombok.Data;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.util.Pair;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.Collection;
@@ -51,10 +54,11 @@ public class BaseService<T extends BaseEntity<PK>, DTO extends BaseEntity<PK>, P
                 .collect(Collectors.toList());
     }
 
-    public Collection<DTO> list(Specification<T> spec) {
-        return this.repository.findAll(spec)
-                .stream().map(this.mapper::toDto)
-                .collect(Collectors.toList());
+    public Pair<Collection<DTO>, Page<T>> list(Specification<T> spec, Pageable pageable) {
+        Page<T> page = this.repository.findAll(spec, pageable);
+        Collection<DTO> dtos = page
+                .stream().map(this.mapper::toDto).toList();
+        return Pair.of(dtos, page);
     }
 
     public long count() {

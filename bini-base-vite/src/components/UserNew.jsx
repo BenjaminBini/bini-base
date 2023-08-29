@@ -9,7 +9,7 @@ import { useQueryClient } from "react-query";
 export default function UserNew() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { data: roles } = useRoles();
+  const { data: roles } = useRoles(0, 1000);
   const saveUser = useSaveUser(queryClient);
 
   const allRoles =

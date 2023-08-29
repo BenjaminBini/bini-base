@@ -10,6 +10,9 @@ import Login from "../components/Login.jsx";
 import { Navigate, Outlet } from "react-router-dom";
 import { useCurrentUser } from "../api/user-api.js";
 import Logout from "../components/Logout.jsx";
+import Teams from "../components/Teams.jsx";
+import TeamNew from "../components/TeamNew.jsx";
+import TeamEdit from "../components/TeamEdit.jsx";
 
 const routes = [
   {
@@ -47,6 +50,18 @@ const routes = [
           {
             path: "users/:userId",
             element: <UserEdit />,
+          },
+          {
+            path: "teams",
+            element: <Teams />,
+          },
+          {
+            path: "teams/new",
+            element: <TeamNew />,
+          },
+          {
+            path: "teams/:teamId",
+            element: <TeamEdit />,
           },
           {
             path: "roles",

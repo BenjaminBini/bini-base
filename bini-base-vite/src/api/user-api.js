@@ -1,17 +1,23 @@
 import axiosInstance from "./axios-config.js";
 import { useMutation, useQuery } from "react-query";
 
-export function useUsers() {
-  return useQuery("users", async () => {
-    const { data } = await axiosInstance.get("/api/user");
-    return data.data;
+export function useUsers(page, delta) {
+  return useQuery(["users", page, delta], async () => {
+    const { data } = await axiosInstance.get(
+      `/api/user?page=${page}&delta=${delta}`,
+    );
+    return data;
   });
 }
 
 export function useUser(userId) {
-  return useQuery(["users", userId], async () => {
-    const { data } = await axiosInstance.get(`/api/user/${userId}`);
-    return data.data;
+  return useQuery({
+    queryKey: ["users", userId],
+    queryFn: async () => {
+      const { data } = await axiosInstance.get(`/api/user/${userId}`);
+      return data.data;
+    },
+    keepPreviousData: true,
   });
 }
 

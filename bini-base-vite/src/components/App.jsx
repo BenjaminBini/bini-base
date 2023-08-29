@@ -11,7 +11,7 @@ const queryClient = new QueryClient();
 
 export default function App() {
   const router = createBrowserRouter(routes);
-  const [colorScheme, setColorScheme] = useState("light");
+  const [colorScheme, setColorScheme] = useState("dark");
   const toggleColorScheme = (value) =>
     setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
 

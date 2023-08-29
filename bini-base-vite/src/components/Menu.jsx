@@ -1,5 +1,10 @@
 import MenuItem from "./MenuItem.jsx";
-import { IconCertificate, IconHome, IconUsers } from "@tabler/icons-react";
+import {
+  IconCertificate,
+  IconHome,
+  IconUser,
+  IconUsers,
+} from "@tabler/icons-react";
 
 export default function Menu() {
   return (
@@ -10,9 +15,14 @@ export default function Menu() {
         icon={<IconHome size={16} stroke={1.5} />}
       />
       <MenuItem
+        to="/admin/teams"
+        label="Teams"
+        icon={<IconUsers size={16} stroke={1.5} />}
+      />
+      <MenuItem
         to="/admin/users"
         label="Users"
-        icon={<IconUsers size={16} stroke={1.5} />}
+        icon={<IconUser size={16} stroke={1.5} />}
       />
       <MenuItem
         to="/admin/roles"
