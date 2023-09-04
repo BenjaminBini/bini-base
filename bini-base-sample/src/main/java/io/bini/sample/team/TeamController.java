@@ -37,6 +37,9 @@ public class TeamController extends BaseController<Team, TeamDTO, Long> {
     @PostMapping
     @PreAuthorize("hasAuthority('ADMIN')")
     protected APIResponse save(@RequestBody TeamDTO dto) {
+        if (dto.getOwner() != null && dto.getOwner().getId() == null) {
+            dto.setOwner(null);
+        }
         return super.save(dto);
     }
 

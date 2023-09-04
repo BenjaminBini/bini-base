@@ -7,7 +7,7 @@ import { IconTrash } from "@tabler/icons-react";
 import { modals } from "@mantine/modals";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import PagedTable from "./PagedTable.jsx";
+import PagedTable from "./ui/PagedTable.jsx";
 
 export default function Roles() {
   const [selectedRecords, setSelectedRecords] = useState([]);

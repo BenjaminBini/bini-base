@@ -28,6 +28,12 @@ public class ApplicationUser implements BaseEntity<Long> {
     @NotEmpty
     String username;
 
+    @NotEmpty
+    String firstName;
+
+    @NotEmpty
+    String lastName;
+
     @Email
     @Column(unique = true)
     @NotEmpty
@@ -38,9 +44,9 @@ public class ApplicationUser implements BaseEntity<Long> {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-        name = "userRoles",
-        joinColumns = @JoinColumn(name = "userId"),
-        inverseJoinColumns = @JoinColumn(name = "roleId"))
+            name = "userRoles",
+            joinColumns = @JoinColumn(name = "userId"),
+            inverseJoinColumns = @JoinColumn(name = "roleId"))
     private Collection<Role> roles;
 
     @CreatedDate

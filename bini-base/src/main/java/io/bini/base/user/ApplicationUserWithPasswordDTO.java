@@ -1,6 +1,5 @@
 package io.bini.base.user;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.bini.base.persistence.BaseEntity;
 import io.bini.base.user.role.RoleDTO;
 import lombok.Getter;
@@ -18,6 +17,10 @@ public class ApplicationUserWithPasswordDTO implements BaseEntity<Long> {
     String username;
 
     String email;
+
+    String firstName;
+
+    String lastName;
 
     String password;
 

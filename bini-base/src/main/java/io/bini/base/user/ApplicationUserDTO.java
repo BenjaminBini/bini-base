@@ -19,6 +19,10 @@ public class ApplicationUserDTO implements BaseEntity<Long> {
 
     String email;
 
+    String firstName;
+
+    String lastName;
+
     @JsonIgnore
     String password;
 

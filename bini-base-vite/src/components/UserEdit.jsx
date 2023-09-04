@@ -9,13 +9,13 @@ import { useParams } from "react-router-dom";
 export default function UserEdit() {
   const { userId } = useParams();
   const { data: user } = useUser(userId);
-  const { data: roles } = useRoles(0, 1000);
+  const { data: response } = useRoles(0, 1000);
   const queryClient = useQueryClient();
   const saveUser = useSaveUser(queryClient);
 
   const allRoles =
-    roles != null
-      ? roles.map((role) => {
+    response?.data != null
+      ? response?.data.map((role) => {
           return { id: role.id, value: role.code, label: role.label };
         })
       : [];

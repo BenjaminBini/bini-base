@@ -21,6 +21,20 @@ export function useUser(userId) {
   });
 }
 
+export function useFindUsersByUserName(userName, page, delta) {
+  return useQuery({
+    queryKey: ["users", userName],
+    queryFn: async () => {
+      const { data } = await axiosInstance.get(
+        `/api/user?username=${userName}&page=${page}&delta=${delta}`,
+      );
+      return data.data;
+    },
+    keepPreviousData: true,
+    enabled: userName.length > 0,
+  });
+}
+
 export function useCurrentUser() {
   return useQuery({
     queryKey: "currentUser",

@@ -78,7 +78,7 @@ const RoleForm = ({ role, saveRole }) => {
               component={Link}
               to="/admin/roles"
             >
-              Cancel
+              Back
             </Button>
           </Group>
         </Stack>

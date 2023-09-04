@@ -3,6 +3,7 @@ import {
   ActionIcon,
   AppShell,
   Burger,
+  Container,
   Footer,
   Group,
   Header,
@@ -79,9 +80,9 @@ export default function Shell({ children }) {
                   title="Toggle color scheme"
                 >
                   {colorScheme === "dark" ? (
-                    <IconSun size="1.1rem" />
+                    <IconSun size="18px" />
                   ) : (
-                    <IconMoonStars size="1.1rem" />
+                    <IconMoonStars size="18px" />
                   )}
                 </ActionIcon>
               </Group>
@@ -90,7 +91,9 @@ export default function Shell({ children }) {
         </Header>
       }
     >
-      <Outlet />
+      <Container>
+        <Outlet />
+      </Container>
     </AppShell>
   );
 }

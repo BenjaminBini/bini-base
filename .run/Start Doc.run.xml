@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Start doc" type="js.build_tools.npm">
+  <configuration default="false" name="Start Doc" type="js.build_tools.npm">
     <package-json value="$PROJECT_DIR$/bini-base-doc/package.json" />
     <command value="start" />
     <node-interpreter value="/opt/homebrew/bin/node" />

@@ -32,11 +32,15 @@ export default function UserForm({ user, allRoles, onSubmit }) {
     initialValues: {
       username: user?.username || "",
       email: user?.email || "",
+      firstName: user?.firstName || "",
+      lastName: user?.lastName || "",
       password: "",
     },
     validate: {
       username: hasLength({ min: 3, max: 50 }),
       email: isEmail(),
+      firstName: hasLength({ min: 3, max: 50 }),
+      lastName: hasLength({ min: 3, max: 50 }),
     },
   });
 
@@ -59,11 +63,17 @@ export default function UserForm({ user, allRoles, onSubmit }) {
           label="Email"
           {...form.getInputProps("email")}
         />
-        <PasswordInput
+        <TextInput
           withAsterisk
-          label="Password"
-          {...form.getInputProps("password")}
+          label="First name"
+          {...form.getInputProps("firstName")}
         />
+        <TextInput
+          withAsterisk
+          label="Last name"
+          {...form.getInputProps("lastName")}
+        />
+        <PasswordInput label="Password" {...form.getInputProps("password")} />
         <TransferList
           value={userRoles}
           onChange={setUserRoles}
@@ -85,7 +95,7 @@ export default function UserForm({ user, allRoles, onSubmit }) {
             component={Link}
             to="/admin/users"
           >
-            Cancel
+            Back
           </Button>
         </Group>
       </Stack>

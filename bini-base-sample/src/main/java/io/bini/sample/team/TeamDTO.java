@@ -14,8 +14,16 @@ public class TeamDTO implements BaseEntity<Long> {
 
     private String label;
 
+    private TeamOwnerDTO owner;
+
     private LocalDateTime createdDate;
 
     private LocalDateTime modifiedDate;
 
+    @Getter
+    @Setter
+    public static class TeamOwnerDTO {
+        private Long id;
+        private String username;
+    }
 }

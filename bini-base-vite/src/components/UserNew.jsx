@@ -9,12 +9,12 @@ import { useQueryClient } from "react-query";
 export default function UserNew() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { data: roles } = useRoles(0, 1000);
+  const { data: response } = useRoles(0, 1000);
   const saveUser = useSaveUser(queryClient);
 
   const allRoles =
-    roles != null
-      ? roles.map((role) => {
+    response?.data != null
+      ? response?.data.map((role) => {
           return { id: role.id, value: role.code, label: role.label };
         })
       : [];

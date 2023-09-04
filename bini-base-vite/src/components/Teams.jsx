@@ -12,8 +12,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { IconTrash } from "@tabler/icons-react";
 import { modals } from "@mantine/modals";
 import { useQueryClient } from "react-query";
-import { useDeleteTeam, useTeams } from "../api/teams-api.js";
-import PagedTable from "./PagedTable.jsx";
+import { useDeleteTeam, useDeleteTeams, useTeams } from "../api/teams-api.js";
+import PagedTable from "./ui/PagedTable.jsx";
 
 export default function Teams() {
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ export default function Teams() {
   const queryClient = useQueryClient();
 
   const deleteTeam = useDeleteTeam(queryClient);
-  const deleteTeams = useDeleteTeam(queryClient);
+  const deleteTeams = useDeleteTeams(queryClient);
 
   const openDeleteTeamModal = (team) =>
     modals.openConfirmModal({

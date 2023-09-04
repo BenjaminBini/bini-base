@@ -13,7 +13,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { IconTrash } from "@tabler/icons-react";
 import { modals } from "@mantine/modals";
 import { useQueryClient } from "react-query";
-import PagedTable from "./PagedTable.jsx";
+import PagedTable from "./ui/PagedTable.jsx";
 
 export default function Users() {
   const navigate = useNavigate();
