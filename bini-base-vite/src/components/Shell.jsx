@@ -1,29 +1,37 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
-  ActionIcon,
   AppShell,
-  Burger,
   Container,
-  Footer,
-  Group,
-  Header,
-  MediaQuery,
-  Navbar,
-  Text,
   useMantineColorScheme,
   useMantineTheme,
 } from "@mantine/core";
-import { Link, Outlet } from "react-router-dom";
-import Menu from "./Menu.jsx";
-import { useCurrentUser } from "../api/user-api.js";
-import { IconMoonStars, IconSun } from "@tabler/icons-react";
+import { Outlet } from "react-router-dom";
+import { useCurrentUser, useSaveUser } from "../api/user-api.js";
+import Menubar from "./Menubar.jsx";
+import { useQueryClient } from "react-query";
 
 export default function Shell({ children }) {
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
 
+  const queryClient = useQueryClient();
   const { data: currentUser } = useCurrentUser();
+  const saveUser = useSaveUser(queryClient);
+
+  const updateUserColorScheme = async (colorScheme) => {
+    await saveUser.mutateAsync({ ...currentUser, colorScheme });
+  };
+
+  useEffect(() => {
+    if (
+      currentUser &&
+      currentUser.colorScheme &&
+      currentUser.colorScheme !== colorScheme
+    ) {
+      toggleColorScheme(currentUser.colorScheme);
+    }
+  }, [currentUser]);
 
   return (
     <AppShell
@@ -38,57 +46,17 @@ export default function Shell({ children }) {
       navbarOffsetBreakpoint="sm"
       asideOffsetBreakpoint="sm"
       navbar={
-        <Navbar
+        <Menubar
           hiddenBreakpoint="sm"
           hidden={!opened}
           width={{ sm: 200, lg: 300 }}
-        >
-          <Menu />
-        </Navbar>
-      }
-      footer={
-        <Footer height={60} p="md">
-          Application footer
-        </Footer>
-      }
-      header={
-        <Header height={{ base: 50, md: 70 }} p="md">
-          <div
-            style={{ display: "flex", alignItems: "center", height: "100%" }}
-          >
-            <MediaQuery largerThan="sm" styles={{ display: "none" }}>
-              <Burger
-                opened={opened}
-                onClick={() => setOpened((o) => !o)}
-                size="sm"
-                color={theme.colors.gray[6]}
-                mr="xl"
-              />
-            </MediaQuery>
-            <Group position="apart" w="100%">
-              <Text>Application header</Text>
-              <Group>
-                {currentUser ? (
-                  <Link to="/logout">Logout</Link>
-                ) : (
-                  <Link to="login">Login</Link>
-                )}
-                <ActionIcon
-                  variant="outline"
-                  color={colorScheme === "dark" ? "yellow" : "blue"}
-                  onClick={() => toggleColorScheme()}
-                  title="Toggle color scheme"
-                >
-                  {colorScheme === "dark" ? (
-                    <IconSun size="18px" />
-                  ) : (
-                    <IconMoonStars size="18px" />
-                  )}
-                </ActionIcon>
-              </Group>
-            </Group>
-          </div>
-        </Header>
+          currentUser={currentUser}
+          colorScheme={colorScheme}
+          toggleColorScheme={() => {
+            toggleColorScheme();
+            updateUserColorScheme(colorScheme === "dark" ? "light" : "dark");
+          }}
+        ></Menubar>
       }
     >
       <Container>

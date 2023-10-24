@@ -12,4 +12,12 @@ public class PlayerDTO implements BaseEntity<Long> {
 
     private String name;
 
+    private PlayerTeamDTO team;
+
+    @Getter
+    @Setter
+    public static class PlayerTeamDTO {
+        private Long id;
+    }
+
 }

@@ -9,7 +9,7 @@ import {
 } from "@mantine/core";
 import { useDeleteUser, useDeleteUsers, useUsers } from "../api/user-api.js";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { IconTrash } from "@tabler/icons-react";
 import { modals } from "@mantine/modals";
 import { useQueryClient } from "react-query";
@@ -61,8 +61,8 @@ export default function Users() {
     {
       accessor: "username",
       title: "Username",
-      render: ({ id, username }) => {
-        return <Link to={`/admin/users/${id}`}>{username}</Link>;
+      render: ({ username }) => {
+        return <Text fw={700}>{username}</Text>;
       },
     },
     { accessor: "email", title: "Email" },
@@ -86,7 +86,12 @@ export default function Users() {
       textAlignment: "right",
       render: (user) => (
         <Group spacing="4" position="right" noWrap>
-          <ActionIcon onClick={() => openDeleteUserModal(user)}>
+          <ActionIcon
+            onClick={(e) => {
+              e.stopPropagation();
+              openDeleteUserModal(user);
+            }}
+          >
             <IconTrash size={18} />
           </ActionIcon>
         </Group>
@@ -104,6 +109,7 @@ export default function Users() {
         getQuery={useUsers}
         selectedRecords={selectedRecords}
         setSelectedRecords={setSelectedRecords}
+        onRowClick={(item) => navigate(`/admin/users/${item.id}`)}
       />
 
       <Group position="left">

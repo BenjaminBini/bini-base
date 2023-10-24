@@ -6,10 +6,12 @@ import { useQueryClient } from "react-query";
 import { IconTrash } from "@tabler/icons-react";
 import { modals } from "@mantine/modals";
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import PagedTable from "./ui/PagedTable.jsx";
+import { useNavigate } from "react-router-dom";
 
 export default function Roles() {
+  const navigate = useNavigate();
+
   const [selectedRecords, setSelectedRecords] = useState([]);
   const [
     addRoleModalOpened,
@@ -52,7 +54,6 @@ export default function Roles() {
     {
       accessor: "code",
       title: "Code",
-      render: ({ id, code }) => <Link to={`/admin/roles/${id}`}>{code}</Link>,
       width: 150,
     },
     {
@@ -65,7 +66,12 @@ export default function Roles() {
       textAlignment: "right",
       render: (role) => (
         <Group spacing="4" position="right" noWrap>
-          <ActionIcon onClick={() => openDeleteRoleModal(role)}>
+          <ActionIcon
+            onClick={(e) => {
+              e.stopPropagation();
+              openDeleteRoleModal(role);
+            }}
+          >
             <IconTrash size={18} />
           </ActionIcon>
         </Group>
@@ -83,6 +89,7 @@ export default function Roles() {
           getQuery={useRoles}
           selectedRecords={selectedRecords}
           setSelectedRecords={setSelectedRecords}
+          onRowClick={(item) => navigate(`/admin/roles/${item.id}`)}
         />
         <Group>
           <Button

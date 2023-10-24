@@ -24,6 +24,8 @@ public class ApplicationUserWithPasswordDTO implements BaseEntity<Long> {
 
     String password;
 
+    String colorScheme;
+
     Collection<RoleDTO> roles;
 
     private LocalDateTime createdDate;

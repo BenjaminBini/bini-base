@@ -23,6 +23,8 @@ public class ApplicationUserDTO implements BaseEntity<Long> {
 
     String lastName;
 
+    String colorScheme;
+
     @JsonIgnore
     String password;
 

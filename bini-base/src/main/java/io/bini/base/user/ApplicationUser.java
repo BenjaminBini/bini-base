@@ -42,6 +42,8 @@ public class ApplicationUser implements BaseEntity<Long> {
     @NotEmpty
     String password;
 
+    String colorScheme;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "userRoles",

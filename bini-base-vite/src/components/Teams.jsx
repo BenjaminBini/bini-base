@@ -8,7 +8,7 @@ import {
   Title,
 } from "@mantine/core";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { IconTrash } from "@tabler/icons-react";
 import { modals } from "@mantine/modals";
 import { useQueryClient } from "react-query";
@@ -57,9 +57,6 @@ export default function Teams() {
     {
       accessor: "label",
       title: "Label",
-      render: ({ id, label }) => {
-        return <Link to={`/admin/teams/${id}`}>{label}</Link>;
-      },
     },
     {
       accessor: "createdDate",
@@ -81,7 +78,12 @@ export default function Teams() {
       textAlignment: "right",
       render: (user) => (
         <Group spacing="4" position="right" noWrap>
-          <ActionIcon onClick={() => openDeleteTeamModal(user)}>
+          <ActionIcon
+            onClick={(e) => {
+              e.stopPropagation();
+              openDeleteTeamModal(user);
+            }}
+          >
             <IconTrash size={18} />
           </ActionIcon>
         </Group>
@@ -100,6 +102,7 @@ export default function Teams() {
         getQuery={useTeams}
         selectedRecords={selectedRecords}
         setSelectedRecords={setSelectedRecords}
+        onRowClick={(item) => navigate(`/admin/teams/${item.id}`)}
       />
       <Group position="left">
         <Button

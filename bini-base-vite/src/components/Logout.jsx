@@ -7,5 +7,5 @@ export default function Logout() {
   const queryClient = useQueryClient();
   queryClient.invalidateQueries();
   queryClient.clear();
-  return <Navigate to="/login" />;
+  return <Navigate to="/" />;
 }

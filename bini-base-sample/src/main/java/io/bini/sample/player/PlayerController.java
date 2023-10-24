@@ -1,13 +1,13 @@
 package io.bini.sample.player;
 
+import io.bini.base.exception.ExistingRelationshipException;
 import io.bini.base.web.controller.APIResponse;
+import io.bini.base.web.controller.APISuccess;
 import io.bini.base.web.controller.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -27,5 +27,15 @@ public class PlayerController extends BaseController<Player, PlayerDTO, Long> {
         return super.list(searchParams);
     }
 
+    @PostMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
+    protected APIResponse save(@RequestBody PlayerDTO dto) {
+        return new APISuccess(service.save(dto));
+    }
 
+    @Override
+    @DeleteMapping("/{id}")
+    protected ResponseEntity<PlayerDTO> delete(@PathVariable("id") Long id) throws ExistingRelationshipException {
+        return super.delete(id);
+    }
 }

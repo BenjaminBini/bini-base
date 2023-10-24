@@ -8,6 +8,7 @@ export default function PagedTable({
   selectedRecords,
   setSelectedRecords,
   initialDelta = 10,
+  onRowClick,
 }) {
   const [activePage, setActivePage] = useState(1);
   const [delta, setDelta] = useState(initialDelta);
@@ -28,6 +29,7 @@ export default function PagedTable({
         records={response?.data}
         selectedRecords={selectedRecords}
         onSelectedRecordsChange={setSelectedRecords}
+        onRowClick={onRowClick}
         columns={columns}
       />
       {response?.pagesCount > 1 && (
